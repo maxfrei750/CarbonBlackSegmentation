@@ -1,7 +1,7 @@
 # TODO: Clean up dependencies.
 name: CarbonBlackSegmentation
 channels:
-- pytorch
+- pytorch-nightly
 - conda-forge
 - defaults
 dependencies:
@@ -24,6 +24,8 @@ dependencies:
 - albumentations
 - fvcore
 - fire
+- future
+- tensorboardx
 - pip
 - pip:
     - segmentation-models-pytorch

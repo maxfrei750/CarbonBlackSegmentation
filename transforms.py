@@ -32,8 +32,9 @@ def get_validation_augmentation():
 
 def to_tensor(x, **kwargs):
     if x.ndim == 3:
-        x = x.transpose(2, 0, 1)
-    return x.astype("float32")
+        x = x.transpose(2, 0, 1).astype("float32")
+
+    return x
 
 
 def get_preprocessing(preprocessing_fn):

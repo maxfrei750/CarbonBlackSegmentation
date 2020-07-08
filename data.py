@@ -4,7 +4,10 @@ from glob import glob
 import numpy as np
 from PIL import Image
 
+import ignite.distributed as idist
+import segmentation_models_pytorch as smp
 from torch.utils.data import Dataset
+from transforms import get_preprocessing, get_training_augmentation, get_validation_augmentation
 
 
 class SegmentationDataset(Dataset):
@@ -64,6 +67,49 @@ class SegmentationDataset(Dataset):
 
     def __len__(self):
         return len(self.images)
+
+
+def get_train_val_datasets(config):
+    preprocessing_fn = smp.encoders.get_preprocessing_fn(
+        config["encoder"], config["encoder_weights"]
+    )
+
+    dataset_train = SegmentationDataset(
+        config["data_path"],
+        config["subset_train"],
+        augmentation=get_training_augmentation(),
+        preprocessing=get_preprocessing(preprocessing_fn),
+    )
+
+    dataset_val = SegmentationDataset(
+        config["data_path"],
+        config["subset_val"],
+        augmentation=get_validation_augmentation(),
+        preprocessing=get_preprocessing(preprocessing_fn),
+    )
+
+    return dataset_train, dataset_val
+
+
+def get_dataloaders(config):
+    dataset_train, dataset_val = get_train_val_datasets(config)
+
+    # Setup data loader also adapted to distributed config: nccl, gloo, xla-tpu
+    dataloader_train = idist.auto_dataloader(
+        dataset_train,
+        batch_size=config["batch_size"],
+        num_workers=config["num_workers"],
+        shuffle=True,
+        drop_last=True,
+    )
+
+    dataloader_val = idist.auto_dataloader(
+        dataset_val,
+        batch_size=2 * config["batch_size"],
+        num_workers=config["num_workers"],
+        shuffle=False,
+    )
+    return dataloader_train, dataloader_val
 
 
 def test():
