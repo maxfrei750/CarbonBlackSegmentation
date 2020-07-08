@@ -1,7 +1,8 @@
 import os
 from glob import glob
 
-import cv2
+import numpy as np
+from PIL import Image
 
 from torch.utils.data import Dataset
 
@@ -10,8 +11,15 @@ class SegmentationDataset(Dataset):
     """Segmentation Dataset. Read images and masks and apply augmentation and preprocessing transformations.
     """
 
-    def __init__(self, root, image_set, image_subfolder="input", mask_subfolder="ground_truth", augmentation=None,
-                 preprocessing=None):
+    def __init__(
+        self,
+        root,
+        image_set,
+        image_subfolder="input",
+        mask_subfolder="ground_truth",
+        augmentation=None,
+        preprocessing=None,
+    ):
 
         self.root = root
         self.image_set = image_set
@@ -41,9 +49,8 @@ class SegmentationDataset(Dataset):
             raise RuntimeError(f"Unequal number of images and masks for dataset {self.image_set}.")
 
     def __getitem__(self, index):
-        image = cv2.imread(self.images[index])
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        mask = cv2.imread(self.masks[index])
+        image = np.array(Image.open(self.images[index]).convert("RGB"))
+        mask = np.array(Image.open(self.masks[index]).convert("1")).astype("uint8")
 
         if self.augmentation:
             sample = self.augmentation(image=image, mask=mask)
