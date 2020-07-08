@@ -1,0 +1,28 @@
+# TODO: Clean up dependencies.
+name: CarbonBlackSegmentation
+channels:
+- pytorch
+- conda-forge
+- defaults
+dependencies:
+- python
+- pillow
+- scikit-image
+- matplotlib
+- scipy
+- tqdm
+- scikit-learn
+- pytorch
+- torchvision
+- cudatoolkit=10.2
+- pandas
+- tensorboard
+- ignite
+- opencv
+- cython
+- imagesize
+- albumentations
+- fvcore
+- pip
+- pip:
+    - segmentation-models-pytorch
