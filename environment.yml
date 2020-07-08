@@ -23,6 +23,8 @@ dependencies:
 - imagesize
 - albumentations
 - fvcore
+- fire
 - pip
 - pip:
     - segmentation-models-pytorch
+    - trains
