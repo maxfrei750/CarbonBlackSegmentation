@@ -16,8 +16,8 @@ def get_metrics(loss):
         return y_pred, y
 
     metrics = {
-        "accuracy": Accuracy(_output_transform_accuracy),
         "loss": Loss(loss),
-        "iou": IoU(ConfusionMatrix(num_classes=2, output_transform=_output_transform_iou)),
+        # "accuracy": Accuracy(_output_transform_accuracy),
+        # "iou": IoU(ConfusionMatrix(num_classes=2, output_transform=_output_transform_iou)),
     }
     return metrics

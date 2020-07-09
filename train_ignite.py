@@ -103,7 +103,7 @@ def training(local_rank, config):
         save_handler=get_save_handler(config),
         evaluator=evaluator,
         models={"model": model},
-        metric_name="accuracy",
+        metric_name="loss",
         n_saved=3,
         trainer=trainer,
         tag="validation",
