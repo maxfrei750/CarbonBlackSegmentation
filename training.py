@@ -8,7 +8,9 @@ def get_optimizer(model, config):
 
     assert config["optimizer"] in optim.__dict__, f"Unknown optimizer: {config['optimizer']}"
 
-    optimizer = optim.__dict__[config["optimizer"]](model.parameters(), lr=config["learning_rate"])
+    optimizer = optim.__dict__[config["optimizer"]](
+        model.parameters(), lr=config["learning_rate"], weight_decay=config["weight_decay"]
+    )
 
     optimizer = idist.auto_optim(optimizer)
 

@@ -141,10 +141,11 @@ def run(
     encoder_weights="imagenet",
     batch_size=6,
     optimizer="Adam",
+    weight_decay=1e-4,
     loss="DiceLoss",
     num_workers=12,
-    num_epochs=24,
-    learning_rate=0.02,
+    num_epochs=40,
+    learning_rate=0.0001,
     num_warmup_epochs=4,
     validate_every=3,
     checkpoint_every=200,
@@ -170,11 +171,12 @@ def run(
         encoder_weights (str): pretrained weights (see https://github.com/qubvel/segmentation_models.pytorch#encoders-).
             Default, "imagenet".
         output_path (str): output path. Default, "./data".
-        batch_size (int): total batch size. Default, 6.
+        batch_size (int): total batch size. Default, 8.
         optimizer (str): optimizer. Default, "Adam".
-        loss (string): loss. Default, "DiceLoss"
+        weight_decay (float): weight decay. Default, 1e-4.
+        loss (string): loss. Default, "DiceLoss".
         num_workers (int): number of workers in the data loader. Default, 12.
-        num_epochs (int): number of epochs to train the model. Default, 24.
+        num_epochs (int): number of epochs to train the model. Default, 40.
         learning_rate (float): peak of piecewise linear learning rate scheduler. Default, 0.4.
         num_warmup_epochs (int): number of warm-up epochs before learning rate decay. Default, 4.
         validate_every (int): run model's validation every ``validate_every`` epochs. Default, 3.
