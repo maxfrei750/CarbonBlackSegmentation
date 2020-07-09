@@ -6,7 +6,10 @@ from ignite.metrics import Accuracy, ConfusionMatrix, IoU, Loss
 def get_metrics(loss):
     def _output_transform_accuracy(output):
         y_pred, y = output
-        y_pred = torch.round(y_pred)
+        y_pred = torch.round(y_pred).flatten(1, -1)
+
+        y = y.flatten(1, -1)
+
         return y_pred, y
 
     def _output_transform_iou(output):
@@ -17,7 +20,7 @@ def get_metrics(loss):
 
     metrics = {
         "loss": Loss(loss),
-        # "accuracy": Accuracy(_output_transform_accuracy),
+        "accuracy": Accuracy(_output_transform_accuracy),
         # "iou": IoU(ConfusionMatrix(num_classes=2, output_transform=_output_transform_iou)),
     }
     return metrics
