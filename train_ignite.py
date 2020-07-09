@@ -317,4 +317,7 @@ def get_save_handler(config):
 
 
 if __name__ == "__main__":
+    active_gpu_ids = [0, 1, 2, 3]
+    utils.select_active_gpus(active_gpu_ids)
+
     fire.Fire(run)
