@@ -6,21 +6,5 @@ def setup_trains_logging(config):
         task.connect_configuration(config)
 
         # Log hyper parameters
-        hyper_params = [
-            "seed",
-            "data_path",
-            "subset_train",
-            "subset_val",
-            "architecture",
-            "encoder",
-            "encoder_weights",
-            "batch_size",
-            "optimizer",
-            "momentum",
-            "weight_decay",
-            "num_epochs",
-            "learning_rate",
-            "num_warmup_epochs",
-            "loss",
-        ]
-        task.connect({k: config[k] for k in hyper_params})
+        hyper_parameters = list(config.keys())
+        task.connect({k: config[k] for k in hyper_parameters})
