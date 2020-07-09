@@ -120,7 +120,7 @@ def training(local_rank, config):
     # noinspection PyBroadException
     try:
         trainer.run(dataloader_train, max_epochs=config["num_epochs"])
-    except Exception as e:
+    except Exception:
         import traceback
 
         print(traceback.format_exc())
