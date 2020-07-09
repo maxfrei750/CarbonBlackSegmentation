@@ -2,7 +2,6 @@ import torch
 from ignite.metrics import Accuracy, ConfusionMatrix, Loss
 
 
-# TODO: Fix metrics.
 def get_metrics(loss):
     def _output_transform_accuracy(output):
         y_pred, y = output
