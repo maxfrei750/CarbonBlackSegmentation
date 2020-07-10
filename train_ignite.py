@@ -109,6 +109,8 @@ def training(local_rank, config):
         tag="validation",
     )
 
+    # TODO: Add early stopping
+
     # In order to check training resuming we can stop training on a given iteration
     if config["stop_iteration"] is not None:
 

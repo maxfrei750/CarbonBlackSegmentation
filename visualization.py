@@ -7,7 +7,7 @@ from PIL import Image, ImageFilter
 
 def get_overlay_image(image, ground_truth=None, prediction=None):
     assert not (
-        ground_truth is None or prediction is None
+        ground_truth is None and prediction is None
     ), "Either ground_truth or prediction need to be specified."
 
     image = np.array(Image.fromarray(image).convert("RGB"))
