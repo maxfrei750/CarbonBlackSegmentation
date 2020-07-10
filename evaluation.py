@@ -26,9 +26,9 @@ def get_metrics(loss):
     metrics = {
         "loss": Loss(loss),
         "accuracy": Accuracy(_output_transform_accuracy),
-        "confusion matrix": ConfusionMatrix(
-            num_classes=2, output_transform=_output_transform_confusion_matrix, average="precision"
-        ),
+        # "confusion matrix": ConfusionMatrix(
+        #     num_classes=2, output_transform=_output_transform_confusion_matrix, average="precision"
+        # ),
     }
     return metrics
 
@@ -49,6 +49,7 @@ class ExamplePredictionLogger:
         image, mask_gt, image_vis = dataset.get_example_sample(self.image_index)
 
         image = torch.from_numpy(image).to(self.device).unsqueeze(0)
+        mask_gt = mask_gt.squeeze()
 
         with torch.no_grad():
             mask_pred = self.model(image).cpu().numpy().squeeze().round()

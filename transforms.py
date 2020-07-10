@@ -1,3 +1,5 @@
+import numpy as np
+
 import albumentations as albu
 
 
@@ -32,9 +34,13 @@ def get_validation_augmentation():
 
 def to_tensor(x, **kwargs):
     if x.ndim == 3:
-        x = x.transpose(2, 0, 1).astype("float32")
+        x = x.transpose(2, 0, 1)
+    elif x.ndim == 2:
+        x = np.expand_dims(x, axis=0)
+    else:
+        raise RuntimeError("Expected input to have either 1 or 3 dimensions.")
 
-    return x
+    return x.astype("float32")
 
 
 def get_preprocessing(preprocessing_fn):
