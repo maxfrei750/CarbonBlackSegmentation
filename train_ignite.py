@@ -7,7 +7,7 @@ import modeling
 import torch
 import utils
 from data import get_dataloaders
-from evaluation import get_metrics
+from evaluation import ExamplePredictionLogger, get_metrics
 from ignite.contrib.engines import common
 from ignite.engine import Engine, Events, create_supervised_evaluator
 from ignite.handlers import Checkpoint, DiskSaver
@@ -79,17 +79,6 @@ def training(local_rank, config):
         model, metrics=metrics, device=device, non_blocking=True
     )
 
-    def run_validation(engine):
-        epoch = trainer.state.epoch
-        state = evaluator_train.run(dataloader_train)
-        log_metrics(logger, epoch, state.times["COMPLETED"], "Train", state.metrics)
-        state = evaluator.run(dataloader_val)
-        log_metrics(logger, epoch, state.times["COMPLETED"], "Val", state.metrics)
-
-    trainer.add_event_handler(
-        Events.EPOCH_COMPLETED(every=config["validate_every"]) | Events.COMPLETED, run_validation
-    )
-
     if rank == 0:
         # Setup TensorBoard logging on trainer and evaluators. Logged values are:
         #  - Training metrics, e.g. running average loss values
@@ -97,6 +86,20 @@ def training(local_rank, config):
         #  - Evaluation train/test metrics
         evaluators = {"training": evaluator_train, "validation": evaluator}
         tb_logger = common.setup_tb_logging(output_path, trainer, optimizer, evaluators=evaluators)
+
+        example_prediction_logger = ExamplePredictionLogger(tb_logger, model, device)
+
+    def run_validation(engine):
+        epoch = trainer.state.epoch
+        state = evaluator_train.run(dataloader_train)
+        log_metrics(logger, epoch, state.times["COMPLETED"], "Train", state.metrics)
+        state = evaluator.run(dataloader_val)
+        log_metrics(logger, epoch, state.times["COMPLETED"], "Val", state.metrics)
+        example_prediction_logger.log_visualization(dataloader_val.dataset, epoch)
+
+    trainer.add_event_handler(
+        Events.EPOCH_COMPLETED(every=config["validate_every"]) | Events.COMPLETED, run_validation
+    )
 
     # Store 3 best models by validation accuracy:
     common.gen_save_best_models_by_val_score(
