@@ -55,7 +55,6 @@ def get_preprocessing(preprocessing_fn):
 def test():
     import argparse
     from PIL import Image
-    import random
     from data import SegmentationDataset
     from visualization import get_overlay_image
 
@@ -63,10 +62,9 @@ def test():
     parser.add_argument("data_root", help="data root")
     args = parser.parse_args()
 
-    dataset = SegmentationDataset(args.data_root, "test", augmentation=get_training_augmentation())
+    dataset = SegmentationDataset(args.data_root, "val", augmentation=get_training_augmentation())
 
-    sample_id = random.randint(0, len(dataset))
-    image, mask = dataset[sample_id]
+    image, mask, _ = dataset.get_example_sample()
 
     overlay_image = get_overlay_image(image, mask)
     Image.fromarray(overlay_image).show()

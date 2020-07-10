@@ -1,4 +1,5 @@
 import os
+import random
 from glob import glob
 
 import numpy as np
@@ -52,21 +53,43 @@ class SegmentationDataset(Dataset):
             raise RuntimeError(f"Unequal number of images and masks for dataset {self.image_set}.")
 
     def __getitem__(self, index):
-        image = np.array(Image.open(self.images[index]).convert("RGB"))
+        image, mask, _ = self.get_sample(index)
+        return image, mask
+
+    def get_raw_mask(self, index):
         mask = np.array(Image.open(self.masks[index]).convert("1")).astype("uint8")
+        return mask
+
+    def get_raw_image(self, index):
+        image = np.array(Image.open(self.images[index]).convert("RGB"))
+        return image
+
+    def __len__(self):
+        return len(self.images)
+
+    def get_example_sample(self, index=None):
+        if index is None:
+            index = random.randint(0, len(self) - 1)
+
+        image, mask, image_vis = self.get_sample(index)
+
+        return image, mask, image_vis
+
+    def get_sample(self, index):
+        image = self.get_raw_image(index)
+        mask = self.get_raw_mask(index)
 
         if self.augmentation:
             sample = self.augmentation(image=image, mask=mask)
             image, mask = sample["image"], sample["mask"]
 
+        image_vis = image
+
         if self.preprocessing:
             sample = self.preprocessing(image=image, mask=mask)
             image, mask = sample["image"], sample["mask"]
 
-        return image, mask
-
-    def __len__(self):
-        return len(self.images)
+        return image, mask, image_vis
 
 
 def get_train_val_datasets(config):
@@ -115,17 +138,15 @@ def get_dataloaders(config):
 def test():
     import argparse
     from PIL import Image
-    import random
     from visualization import get_overlay_image
 
     parser = argparse.ArgumentParser(description="dataset")
     parser.add_argument("data_root", help="data root")
     args = parser.parse_args()
 
-    dataset = SegmentationDataset(args.data_root, "test")
+    dataset = SegmentationDataset(args.data_root, "val")
 
-    sample_id = random.randint(0, len(dataset))
-    image, mask = dataset[sample_id]
+    _, mask, image = dataset.get_example_sample()
     overlay_image = get_overlay_image(image, mask)
 
     Image.fromarray(overlay_image).show()
