@@ -62,7 +62,8 @@ def training(local_rank, config):
 
     dataloader_train, dataloader_val = get_dataloaders(config)
 
-    config["num_iters_per_epoch"] = len(dataloader_train)
+    config["num_iterations_per_epoch"] = len(dataloader_train)
+    config["num_epochs"] = round(config["num_iterations"] / config["num_iterations_per_epoch"])
     model = modeling.get_model(config)
 
     optimizer = get_optimizer(model, config)
@@ -160,11 +161,11 @@ def run(
     weight_decay=1e-4,
     loss="BCELoss",
     num_workers=12,
-    num_epochs=500,
+    num_iterations=10000,
     learning_rate=0.0001,
-    learning_rate_milestone_epochs=(100, 400),
+    learning_rate_milestone_iterations=(2000, 8000),
     gamma=0.1,
-    num_warmup_epochs=50,
+    num_warmup_iterations=1000,
     warmup_factor=0.001,
     validate_every=10,
     checkpoint_every=200,
@@ -195,12 +196,12 @@ def run(
         weight_decay (float): weight decay. Default, 1e-4.
         loss (string): loss. Default, "DiceLoss".
         num_workers (int): number of workers in the data loader. Default, 12.
-        num_epochs (int): number of epochs to train the model. Default, 40.
+        num_iterations (int): number of iterations to train the model. Default, 10000.
         learning_rate (float): peak of piecewise linear learning rate scheduler. Default, 0.4.
-        learning_rate_milestone_epochs (iterable of int): number of epochs where learning rate is decreased by a factor
-            gamma. Default, (100, 400).
+        learning_rate_milestone_iterations (iterable of int): numbers of iterations where learning rate is each time
+            decreased by a factor gamma. Default, (2000, 8000).
         gamma (float): factor to multiply learning rate with at each milestone. Default, 0.1.
-        num_warmup_epochs (int): number of warm-up epochs before learning rate decay. Default, 4.
+        num_warmup_iterations (int): number of warm-up iterations before learning rate decay. Default, 1000.
         warmup_factor (float): learning rate starts at warmup_factor * learning_rate. Default, 0.001.
         validate_every (int): run model's validation every ``validate_every`` epochs. Default, 3.
         checkpoint_every (int): store training checkpoint every ``checkpoint_every`` iterations. Default, 200.

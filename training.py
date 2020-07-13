@@ -25,19 +25,21 @@ def get_loss(config):
 def get_lr_scheduler(optimizer, config):
     lr = config["learning_rate"]
     warmup_factor = config["warmup_factor"]
-    num_warmup_epochs = config["num_warmup_epochs"]
-    learning_rate_milestone_epochs = config["learning_rate_milestone_epochs"]
+    num_warmup_iterations = config["num_warmup_iterations"]
+    learning_rate_milestone_iterations = config["learning_rate_milestone_iterations"]
     gamma = config["gamma"]
 
-    learning_rate_milestone_epochs = [x - num_warmup_epochs for x in learning_rate_milestone_epochs]
+    learning_rate_milestone_iterations = [
+        x - num_warmup_iterations for x in learning_rate_milestone_iterations
+    ]
     lr_scheduler = MultiStepLR(
-        optimizer=optimizer, gamma=gamma, milestones=learning_rate_milestone_epochs
+        optimizer=optimizer, gamma=gamma, milestones=learning_rate_milestone_iterations
     )
 
     lr_scheduler = create_lr_scheduler_with_warmup(
         lr_scheduler,
         warmup_start_value=lr * warmup_factor,
         warmup_end_value=lr,
-        warmup_duration=num_warmup_epochs,
+        warmup_duration=num_warmup_iterations,
     )
     return lr_scheduler
