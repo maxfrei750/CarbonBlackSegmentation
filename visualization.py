@@ -1,8 +1,5 @@
 import numpy as np
-from PIL import Image, ImageFilter
-
-# from skimage import img_as_ubyte
-# from skimage.exposure import rescale_intensity
+from PIL import Image, ImageFilter, ImageOps
 
 
 def get_overlay_image(image, ground_truth=None, prediction=None):
@@ -23,25 +20,14 @@ def get_overlay_image(image, ground_truth=None, prediction=None):
 
 def _add_overlay(image, mask, color):
     mask = Image.fromarray(mask).convert("L")
-    outlines = mask.filter(ImageFilter.FIND_EDGES)
-    outlines = np.array(outlines)
-    image[np.nonzero(outlines)] = color
+    image = Image.fromarray(image)
 
-    return image
+    outlines = np.array(mask.filter(ImageFilter.FIND_EDGES))
+
+    mask_colored = ImageOps.colorize(mask, (0, 0, 0), color, whitepoint=1)
+    overlay_image = np.array(Image.blend(image, mask_colored, 0.1))
+    overlay_image[np.nonzero(outlines)] = color
+
+    return overlay_image
 
 
-# def get_logging_image(prediction, image, outline_color=(255, 0, 0)):
-#     # Partially based on:
-#     #   https://stackoverflow.com/questions/57576686/how-to-overlay-segmented-image-on-top-of-main-image-in-python
-#
-#     mask = prediction.argmax(dim=1).squeeze().cpu().numpy().astype("uint8") * 255
-#
-#     image = image.squeeze().cpu().numpy()
-#     image = np.rollaxis(image, 0, 3)
-#
-#     image = rescale_intensity(image)
-#     image = img_as_ubyte(image)
-#
-#     logging_image = get_overlay_image(image, mask, outline_color)
-#
-#     return logging_image
