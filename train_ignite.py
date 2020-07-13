@@ -14,6 +14,12 @@ from ignite.handlers import Checkpoint, DiskSaver
 from ignite.utils import manual_seed, setup_logger
 from log import setup_trains_logging
 from training import get_loss, get_lr_scheduler, get_optimizer
+from visualization import plot_confusion_matrix
+
+
+def log_confusion_matrix(tb_logger, epoch, data_subset, metrics):
+    figure = plot_confusion_matrix(metrics["confusion matrix"].cpu().numpy())
+    tb_logger.writer.add_figure(f"confusion matrix/{data_subset}", figure, global_step=epoch)
 
 
 def training(local_rank, config):
@@ -92,9 +98,14 @@ def training(local_rank, config):
     def run_validation(engine):
         epoch = trainer.state.epoch
         state = evaluator_train.run(dataloader_train)
-        log_metrics(logger, epoch, state.times["COMPLETED"], "Train", state.metrics)
+        data_subset = "Train"
+        log_metrics(logger, epoch, state.times["COMPLETED"], data_subset, state.metrics)
+        log_confusion_matrix(tb_logger, epoch, data_subset, state.metrics)
+
         state = evaluator.run(dataloader_val)
-        log_metrics(logger, epoch, state.times["COMPLETED"], "Val", state.metrics)
+        data_subset = "Val"
+        log_metrics(logger, epoch, state.times["COMPLETED"], data_subset, state.metrics)
+        log_confusion_matrix(tb_logger, epoch, data_subset, state.metrics)
         example_prediction_logger.log_visualization(dataloader_val.dataset, epoch)
 
     trainer.add_event_handler(

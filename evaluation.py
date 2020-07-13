@@ -20,15 +20,16 @@ def get_metrics(loss):
         y_pred = y_pred.flatten(1, -1)
         y_pred = torch.stack([y_pred, 1 - y_pred], 1)
         y = y.flatten(1, -1)
+        y = y.int()
 
         return y_pred, y
 
     metrics = {
         "loss": Loss(loss),
         "accuracy": Accuracy(_output_transform_accuracy),
-        # "confusion matrix": ConfusionMatrix(
-        #     num_classes=2, output_transform=_output_transform_confusion_matrix, average="precision"
-        # ),
+        "confusion matrix": ConfusionMatrix(
+            num_classes=2, output_transform=_output_transform_confusion_matrix, average="precision"
+        ),
     }
     return metrics
 
