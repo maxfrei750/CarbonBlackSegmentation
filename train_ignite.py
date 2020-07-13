@@ -16,6 +16,9 @@ from log import setup_trains_logging
 from training import get_loss, get_lr_scheduler, get_optimizer
 from visualization import plot_confusion_matrix
 
+# TODO: Refactoring
+# TODO: Freeze resnet stages.
+
 
 def log_confusion_matrix(tb_logger, epoch, data_subset, metrics):
     figure = plot_confusion_matrix(metrics["confusion matrix"].cpu().numpy())
