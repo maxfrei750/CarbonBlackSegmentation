@@ -165,7 +165,7 @@ def run(
     loss="BCELoss",
     num_workers=12,
     num_iterations=10000,
-    learning_rate=0.0001,
+    learning_rate=0.02,
     learning_rate_milestone_iterations=(2000, 8000),
     gamma=0.1,
     num_warmup_iterations=1000,
