@@ -32,15 +32,12 @@ def get_validation_augmentation():
     return albu.Compose(test_transform)
 
 
-def to_tensor(x, **kwargs):
-    if x.ndim == 3:
-        x = x.transpose(2, 0, 1)
-    elif x.ndim == 2:
-        x = np.expand_dims(x, axis=0)
-    else:
-        raise RuntimeError("Expected input to have either 1 or 3 dimensions.")
+def to_tensor_image(x, **kwargs):
+    return x.transpose(2, 0, 1).astype("float32")
 
-    return x.astype("float32")
+
+def to_tensor_mask(x, **kwargs):
+    return np.expand_dims(x, axis=0).astype("float32")
 
 
 def get_preprocessing(preprocessing_fn):
@@ -54,7 +51,10 @@ def get_preprocessing(preprocessing_fn):
 
     """
 
-    _transform = [albu.Lambda(image=preprocessing_fn), albu.Lambda(image=to_tensor, mask=to_tensor)]
+    _transform = [
+        albu.Lambda(image=preprocessing_fn),
+        albu.Lambda(image=to_tensor_image, mask=to_tensor_mask),
+    ]
     return albu.Compose(_transform)
 
 
