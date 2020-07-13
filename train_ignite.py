@@ -162,7 +162,10 @@ def run(
     num_workers=12,
     num_epochs=500,
     learning_rate=0.0001,
-    num_warmup_epochs=5,
+    learning_rate_milestone_epochs=(100, 400),
+    gamma=0.1,
+    num_warmup_epochs=50,
+    warmup_factor=0.001,
     validate_every=10,
     checkpoint_every=200,
     backend=None,
@@ -194,7 +197,11 @@ def run(
         num_workers (int): number of workers in the data loader. Default, 12.
         num_epochs (int): number of epochs to train the model. Default, 40.
         learning_rate (float): peak of piecewise linear learning rate scheduler. Default, 0.4.
+        learning_rate_milestone_epochs (iterable of int): number of epochs where learning rate is decreased by a factor
+            gamma. Default, (100, 400).
+        gamma (float): factor to multiply learning rate with at each milestone. Default, 0.1.
         num_warmup_epochs (int): number of warm-up epochs before learning rate decay. Default, 4.
+        warmup_factor (float): learning rate starts at warmup_factor * learning_rate. Default, 0.001.
         validate_every (int): run model's validation every ``validate_every`` epochs. Default, 3.
         checkpoint_every (int): store training checkpoint every ``checkpoint_every`` iterations. Default, 200.
         backend (str, optional): backend to use for distributed configuration. Possible values: None, "nccl", "xla-tpu",
