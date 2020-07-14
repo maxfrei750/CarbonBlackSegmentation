@@ -37,8 +37,8 @@ def get_optimizer(model, config):
     return optimizer
 
 
-def get_loss(config):
-    return smp.utils.losses.__dict__[config["loss"]]().to(idist.device())
+def get_loss():
+    return smp.utils.losses.BCELoss().to(idist.device())
 
 
 def get_lr_scheduler(optimizer, config):
@@ -187,7 +187,7 @@ def training(local_rank, config):
     model = modeling.get_model(config)
 
     optimizer = get_optimizer(model, config)
-    loss = get_loss(config)
+    loss = get_loss()
 
     lr_scheduler = get_lr_scheduler(optimizer, config)
 

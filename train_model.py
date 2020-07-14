@@ -19,7 +19,6 @@ def run(
     batch_size=6,
     optimizer="Adam",
     weight_decay=1e-4,
-    loss="BCELoss",
     num_workers=12,
     num_iterations=10000,
     learning_rate=0.0001,
@@ -55,7 +54,6 @@ def run(
         batch_size (int): total batch size. Default, 8.
         optimizer (str): optimizer. Default, "Adam".
         weight_decay (float): weight decay. Default, 1e-4.
-        loss (string): loss. Default, "DiceLoss".
         num_workers (int): number of workers in the data loader. Default, 12.
         num_iterations (int): number of iterations to train the model. Default, 10000.
         learning_rate (float): peak of piecewise linear learning rate scheduler. Default, 0.4.
