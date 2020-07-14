@@ -160,7 +160,7 @@ def run(
     encoder="resnet50",
     encoder_weights="imagenet",
     batch_size=6,
-    optimizer="SGD",
+    optimizer="Adam",
     weight_decay=1e-4,
     loss="BCELoss",
     num_workers=12,
