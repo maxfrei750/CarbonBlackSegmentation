@@ -18,6 +18,7 @@ from visualization import plot_confusion_matrix
 
 # TODO: Refactoring
 # TODO: Freeze resnet stages.
+# TODO: Test Loss weights
 
 
 def log_confusion_matrix(tb_logger, epoch, data_subset, metrics):
