@@ -88,6 +88,11 @@ def create_trainer(model, optimizer, criterion, lr_scheduler, train_sampler, con
         model.train()
         # Supervised part
         y_pred = model(x)
+
+        criterion.weights = torch.tensor(
+            [1 - torch.sum(y == x).to(torch.float) / torch.numel(y) for x in [0, 1]], device=device
+        )
+
         loss = criterion(y_pred, y)
 
         optimizer.zero_grad()

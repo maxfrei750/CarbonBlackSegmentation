@@ -4,7 +4,6 @@ import utils
 from training import training
 
 # TODO: Freeze resnet stages.
-# TODO: Test Loss weights
 
 
 def run(
