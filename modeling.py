@@ -15,7 +15,19 @@ def get_model(config):
         activation="sigmoid",
     )
 
+    if "encoder_freeze_at" in config:
+        freeze_encoder_at(model.encoder, config["encoder_freeze_at"])
+
     # Adapt model for distributed settings if configured
     model = idist.auto_model(model)
 
     return model
+
+
+def freeze_encoder_at(encoder, freeze_at):
+    layer_id = freeze_at
+    while hasattr(encoder, f"layer{layer_id}"):
+        for parameter in getattr(encoder, f"layer{layer_id}").parameters():
+            parameter.requires_grad = False
+
+        layer_id += 1

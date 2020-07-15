@@ -3,8 +3,6 @@ import ignite.distributed as idist
 import utils
 from training import training
 
-# TODO: Freeze resnet stages.
-
 
 def run(
     seed=42,
@@ -15,6 +13,7 @@ def run(
     architecture="FPN",
     encoder="resnet50",
     encoder_weights="imagenet",
+    encoder_freeze_at=2,
     batch_size=6,
     optimizer="Adam",
     weight_decay=1e-4,
@@ -49,6 +48,8 @@ def run(
             Default, "resnet50".
         encoder_weights (str): pretrained weights (see https://github.com/qubvel/segmentation_models.pytorch#encoders-).
             Default, "imagenet".
+        encoder_freeze_at (int): defines stages of the encoder which are frozen before the training (e.g. 2 means all
+            stages including stage 2 and beyond). Default, 2.
         output_path (str): output path. Default, "./data".
         batch_size (int): total batch size. Default, 8.
         optimizer (str): optimizer. Default, "Adam".
