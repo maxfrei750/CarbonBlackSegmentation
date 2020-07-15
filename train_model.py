@@ -72,6 +72,7 @@ def run(
             It can be 0 to disable it. Default, 15.
         stop_iteration (int, optional): iteration to stop the training. Can be used to check resume from checkpoint.
         with_trains (bool): if True, experiment Trains logger is setup. Default, False.
+        active_gpu_ids (tuple of int): ids of GPUs to use. Default, (0,).
         **spawn_kwargs: Other kwargs to spawn run in child processes: master_addr, master_port, node_rank, nnodes
 
     """
