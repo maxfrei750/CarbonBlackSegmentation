@@ -58,17 +58,12 @@ def get_preprocessing(preprocessing_fn):
     return albu.Compose(_transform)
 
 
-def test():
-    import argparse
+def test(data_root):
     from PIL import Image
     from data import SegmentationDataset
     from visualization import get_overlay_image
 
-    parser = argparse.ArgumentParser(description="transforms")
-    parser.add_argument("data_root", help="data root")
-    args = parser.parse_args()
-
-    dataset = SegmentationDataset(args.data_root, "val", augmentation=get_training_augmentation())
+    dataset = SegmentationDataset(data_root, "val", augmentation=get_training_augmentation())
 
     image, mask, _ = dataset.get_example_sample()
 
@@ -77,4 +72,6 @@ def test():
 
 
 if __name__ == "__main__":
-    test()
+    import fire
+
+    fire.Fire(test)
