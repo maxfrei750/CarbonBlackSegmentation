@@ -4,7 +4,6 @@ import utils
 from training import training
 
 # TODO: Use larger image chunks.
-# TODO: Drop samples with empty masks.
 
 
 def run(
