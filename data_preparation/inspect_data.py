@@ -4,6 +4,7 @@ from glob import glob
 
 import numpy as np
 from PIL import Image, ImageFilter
+from tqdm import tqdm
 
 import fire
 
@@ -19,7 +20,7 @@ def inspect_data(
 
     input_image_paths = glob(os.path.join(base_directory, input_folder, "*.*"))
 
-    for input_image_path in input_image_paths:
+    for input_image_path in tqdm(input_image_paths):
         filename = os.path.basename(input_image_path)
         ground_truth_path = os.path.join(base_directory, ground_truth_folder, filename)
         inspection_image_path = os.path.join(base_directory, inspection_folder, filename)

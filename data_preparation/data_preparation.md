@@ -1,18 +1,17 @@
-1. Aggregated all ground truth files in one folder and all images in another one: 
-    `mv */* .`
-2. Converted from tif to png:
-    `mogrify -format png *.*`
+1. Aggregated all ground truth files in one folder and all images in another one: `mv */* .`
+2. Converted from tif to png: `mogrify -format png *.*`
 3. Removed outliers:
     * Case2_E9_032
     * Case2_E9_033
     * Case4_D8_001
-4. Removed images with incomplete ground truths (probably operator fatigue):
+4. Removed images without associated ground thruths and vice versa (see `remove_samples_without_input_image.py` and `remove_samples_without_ground_truth.py`).
+5. Created inspection images (see `inspect_data.py`).
+6. Removed inspection images with faulty ground truths manually:
     * Case2_E9_019
     * Case2_E9_034
     * Case2_E9_035
     * Case4_D8_034
     * Case5_D10_023
-5. Removed images with incomplete ground truths, caused by agglomerates touching the image border:
     * Case1_E7_002
     * Case1_E7_031
     * Case3_D6_007
@@ -78,6 +77,102 @@
     * Case6_C7_009
     * Case6_C7_023
     * Case6_C7_033
-6. Split data into training and test sets (85%/15%): 
-
-    `python split_data.py`
+    * A10_007
+    * A10_010
+    * A10_004
+    * A10_013
+    * A10_014
+    * A6_001
+    * A6_003
+    * A6_005
+    * A6_007
+    * A6_008
+    * A6_010
+    * A6_011
+    * A6_014
+    * A6_015
+    * A6_016
+    * A6_018
+    * A6_021
+    * A6_022
+    * A7_001
+    * A7_002
+    * A7_003
+    * A7_006
+    * A7_007
+    * A7_009
+    * A7_013
+    * A7_014
+    * A7_017
+    * A7_019
+    * A7_020
+    * A8_001
+    * A8_003
+    * A8_004
+    * A8_005
+    * A8_010
+    * A8_014
+    * A8_015
+    * A8_019
+    * A8_023
+    * A9_001
+    * A9_002
+    * A9_004
+    * A9_005
+    * A9_006
+    * A9_010
+    * A9_014
+    * B10_016
+    * B10_020
+    * B6_001
+    * B6_003
+    * B6_005
+    * B6_007
+    * B6_008
+    * B6_009
+    * B6_010
+    * B6_011
+    * B6_012
+    * B6_013
+    * B6_014
+    * B6_015
+    * B6_017
+    * B6_019
+    * C10_018
+    * C6_002
+    * C6_004
+    * C6_008
+    * C6_010
+    * C6_012
+    * C6_013
+    * C6_014
+    * C9_001
+    * C9_003
+    * C9_008
+    * C9_010
+    * C9_016
+    * C9_018
+    * C9_019
+    * C9_021
+    * C9_022
+    * C9_024
+    * D9_007
+    * D9_014
+    * D9_015
+    * D9_016
+    * D9_018
+    * E7_001
+    * E7_005
+    * E7_012
+    * E8_001
+    * E8_002
+    * E8_003
+    * E8_008
+    * E8_009
+    * E8_010
+    * E8_012
+    * E8_013
+    * E8_015
+    * E8_016
+7. Removed ground truths and images belonging to the removed inspection images (see `remove_samples_without_inspection_images.py`).
+8. Split data into training and validation sets (85%/15%) (see `split_data.py`).
