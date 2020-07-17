@@ -149,6 +149,8 @@ def create_trainer(model, optimizer, criterion, lr_scheduler, train_sampler, con
 
 def training(local_rank, config):
 
+    config["device"] = "cuda" if config["active_gpu_ids"] else "cpu"
+
     rank = idist.get_rank()
     manual_seed(config["seed"] + rank)
 

@@ -26,6 +26,7 @@ class Segmentor:
             "architecture": architecture,
             "encoder": encoder,
             "encoder_weights": encoder_weights,
+            "device": device,
         }
 
         if checkpoint_path is None:
@@ -46,6 +47,7 @@ class Segmentor:
 
     def load_model(self):
         model = get_model(self.config)
+        model.to(self.device)
         checkpoint = torch.load(self.checkpoint_path, map_location=self.device)
         Checkpoint.load_objects(to_load={"model": model}, checkpoint=checkpoint)
         model.eval()

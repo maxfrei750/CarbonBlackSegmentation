@@ -18,6 +18,10 @@ def get_model(config):
     if "encoder_freeze_at" in config:
         freeze_encoder_at(model.encoder, config["encoder_freeze_at"])
 
+    if "device" in config:
+        if config["device"] == "cpu":
+            return model
+
     # Adapt model for distributed settings if configured
     model = idist.auto_model(model)
 
