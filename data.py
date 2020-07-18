@@ -53,12 +53,7 @@ class SegmentationDataset(Dataset):
             raise RuntimeError(f"Unequal number of images and masks for dataset {self.image_set}.")
 
     def __getitem__(self, index):
-        while True:
-            image, mask, _ = self.get_sample(index)
-
-            if np.any(mask):
-                break
-
+        image, mask, _ = self.get_sample(index)
         return image, mask
 
     def get_raw_mask(self, index):
