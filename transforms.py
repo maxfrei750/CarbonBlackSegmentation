@@ -4,7 +4,7 @@ import albumentations as albu
 
 
 def get_training_augmentation():
-    crop_size = 640
+    crop_size = 1280
     train_transform = [
         albu.HorizontalFlip(p=0.5),
         albu.VerticalFlip(p=0.5),
