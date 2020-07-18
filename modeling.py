@@ -29,9 +29,10 @@ def get_model(config):
 
 
 def freeze_encoder_at(encoder, freeze_at):
-    layer_id = freeze_at
-    while hasattr(encoder, f"layer{layer_id}"):
-        for parameter in getattr(encoder, f"layer{layer_id}").parameters():
-            parameter.requires_grad = False
+    if freeze_at is not None:
+        layer_id = freeze_at
+        while hasattr(encoder, f"layer{layer_id}"):
+            for parameter in getattr(encoder, f"layer{layer_id}").parameters():
+                parameter.requires_grad = False
 
-        layer_id += 1
+            layer_id += 1
