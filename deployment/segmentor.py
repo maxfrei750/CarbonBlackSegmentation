@@ -9,6 +9,7 @@ import torch
 from ignite.handlers import Checkpoint
 from modeling import get_model
 from transforms import get_preprocessing, get_validation_augmentation
+from utils import download_checkpoint
 from visualization import get_overlay_image
 
 
@@ -30,11 +31,12 @@ class Segmentor:
         }
 
         if checkpoint_path is None:
-            self.checkpoint_path = os.path.join(
-                os.path.dirname(__file__), "FPN-resnet50-imagenet.pt"
-            )
-        else:
-            self.checkpoint_path = checkpoint_path
+            checkpoint_path = os.path.join(os.path.dirname(__file__), "FPN-resnet50-imagenet.pt")
+
+            if not os.path.exists(checkpoint_path):
+                download_checkpoint(checkpoint_path)
+
+        self.checkpoint_path = checkpoint_path
 
         self.device = device
 

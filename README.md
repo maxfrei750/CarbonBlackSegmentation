@@ -1,9 +1,10 @@
 [![License](https://img.shields.io/github/license/maxfrei750/CarbonBlackSegmentation.svg)](https://github.com/maxfrei750/CarbonBlackSegmentation/blob/master/LICENSE) 
 
 - [ ] Update license and citation
-- [ ] Add reference to publication
+- [ ] Add references to publication
 - [ ] Add docker support
 - [ ] Create 1.0 release
+- [ ] Replace temporary checkpoint url.
 - [ ] Publish
 
 # CarbonBlackSegmentation
