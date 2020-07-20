@@ -5,6 +5,7 @@
 - [ ] Add docker support
 - [ ] Create 1.0 release
 - [ ] Replace temporary checkpoint url.
+- [ ] Tidy up repository.
 - [ ] Publish
 
 # CarbonBlackSegmentation
