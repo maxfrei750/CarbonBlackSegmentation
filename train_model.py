@@ -3,8 +3,6 @@ import ignite.distributed as idist
 import utils
 from training import training
 
-# TODO: Use larger image chunks.
-
 
 def run(
     seed=42,
