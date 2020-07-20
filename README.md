@@ -4,8 +4,8 @@
 - [ ] Add references to publication
 - [ ] Add docker support
 - [ ] Create 1.0 release
-- [ ] Replace temporary checkpoint url.
-- [ ] Tidy up repository.
+- [ ] Replace temporary checkpoint url
+- [ ] Tidy up repository
 - [ ] Publish
 
 # CarbonBlackSegmentation
@@ -16,7 +16,7 @@ of transmission electron microscopy images of carbon black agglomerates.
 The utilized convolutional neural network was inspired by the Panoptic FPN architecture, developed by 
 [Kirillov et al.](https://openaccess.thecvf.com/content_CVPR_2019/papers/Kirillov_Panoptic_Feature_Pyramid_Networks_CVPR_2019_paper.pdf) 
 and is based on an implementation of [Yakubovskiy](https://github.com/qubvel/segmentation_models.pytorch), 
-realized with [PyTorch]("https://pytorch.org/").
+realized with [PyTorch](https://pytorch.org/).
 
 ## Table of Contents
    * [CarbonBlackSegmentation](#CarbonBlackSegmentation)
