@@ -1,1 +1,1 @@
-from .segmentor import Segmentor
+from .segmenter import Segmenter

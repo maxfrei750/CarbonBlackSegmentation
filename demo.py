@@ -1,7 +1,7 @@
 import numpy as np
 from PIL import Image
 
-from deployment import Segmentor
+from deployment import Segmenter
 from visualization import get_overlay_image
 
 
@@ -16,11 +16,11 @@ def demo():
     # Convert image to numpy array.
     image = np.asarray(image)
 
-    # Create a Segmentor object.
-    segmentor = Segmentor(device=device)
+    # Create a Segmenter object.
+    segmenter = Segmenter(device=device)
 
     # Segment an image.
-    mask = segmentor.segment_image(image)
+    mask = segmenter.segment_image(image)
 
     # Display result.
     overlay_image = get_overlay_image(image, prediction=mask, alpha=0)

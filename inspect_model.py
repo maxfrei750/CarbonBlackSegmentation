@@ -5,7 +5,7 @@ from PIL import Image
 
 import fire
 from data import SegmentationDataset
-from deployment import Segmentor
+from deployment import Segmenter
 from visualization import get_overlay_image
 
 
@@ -20,7 +20,7 @@ def get_example_predictions(
 ):
     config = checkpoint_path_to_config(checkpoint_path)
 
-    segmentor = Segmentor(
+    segmenter = Segmenter(
         architecture=config["architecture"],
         encoder=config["encoder"],
         encoder_weights=config["encoder_weights"],
@@ -36,7 +36,7 @@ def get_example_predictions(
         image_vis = dataset_vis[image_id][0].astype("uint8")
         image, mask_gt = dataset[image_id]
 
-        mask_pred = segmentor.segment_image(image)
+        mask_pred = segmenter.segment_image(image)
         overlay_image = get_overlay_image(image_vis, prediction=mask_pred, ground_truth=mask_gt)
         Image.fromarray(overlay_image).show()
 

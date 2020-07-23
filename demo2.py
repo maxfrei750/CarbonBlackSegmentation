@@ -5,7 +5,7 @@ import numpy as np
 from PIL import Image
 from tqdm import tqdm
 
-from deployment import Segmentor
+from deployment import Segmenter
 
 
 def demo():
@@ -13,9 +13,9 @@ def demo():
     data_dir = os.path.join("data", "val", "input")
     image_paths = glob(os.path.join(data_dir, "*.*"))
 
-    # Create a Segmentor object. When segmenting many images, it may be advisable to use a GPU.
+    # Create a Segmenter object. When segmenting many images, it may be advisable to use a GPU.
     device = "cuda"
-    segmentor = Segmentor(device=device)
+    segmenter = Segmenter(device=device)
 
     # Create an empty list to store the masks.
     masks = []
@@ -26,7 +26,7 @@ def demo():
         image = np.asarray(Image.open(image_path).convert("RGB"))
 
         # Segment the image.
-        mask = segmentor.segment_image(image)
+        mask = segmenter.segment_image(image)
 
         # Store the mask in the list of masks.
         masks.append(mask)

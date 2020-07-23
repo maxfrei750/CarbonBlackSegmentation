@@ -13,7 +13,7 @@ from utils import download_checkpoint
 from visualization import get_overlay_image
 
 
-class Segmentor:
+class Segmenter:
     def __init__(
         self,
         architecture="FPN",
@@ -74,8 +74,8 @@ if __name__ == "__main__":
     data_dir = os.path.join("..", "data", "val", "input")
     test_image_path = random.sample(glob(os.path.join(data_dir, "*.*")), 1)[0]
     test_image = np.asarray(Image.open(test_image_path).convert("RGB"))
-    segmentor = Segmentor()
-    mask = segmentor.segment_image(test_image)
+    segmenter = Segmenter()
+    mask = segmenter.segment_image(test_image)
 
     overlay_image = get_overlay_image(test_image, prediction=mask, alpha=0)
     Image.fromarray(overlay_image).show()
