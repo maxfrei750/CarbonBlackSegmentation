@@ -13,13 +13,20 @@ def demo():
     data_dir = os.path.join("data", "val", "input")
     image_paths = glob(os.path.join(data_dir, "*.*"))
 
-    # Create a Segmenter object. When segmenting many images, it may be advisable to use a GPU.
+    # When segmenting many images, it may be advisable to use a GPU.
     device = "cuda"
+
+    # Perform the segmentation.
+    masks = iterate_and_segment_images(image_paths, device)
+
+
+def iterate_and_segment_images(image_paths, device="cpu"):
+
+    # Create a Segmenter object.
     segmenter = Segmenter(device=device)
 
     # Create an empty list to store the masks.
     masks = []
-
     # Iterate the image paths.
     for image_path in tqdm(image_paths):
         # Load an image and convert it to an RGB array.
@@ -30,6 +37,7 @@ def demo():
 
         # Store the mask in the list of masks.
         masks.append(mask)
+    return masks
 
 
 if __name__ == "__main__":
