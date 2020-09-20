@@ -68,15 +68,6 @@ def create_trainer(model, optimizer, criterion, lr_scheduler, train_sampler, con
 
     device = idist.device()
 
-    # Setup Ignite trainer:
-    # - let's define training step
-    # - add other common handlers:
-    #    - TerminateOnNan,
-    #    - handler to setup learning rate scheduling,
-    #    - ModelCheckpoint
-    #    - RunningAverage` on `train_step` output
-    #    - Two progress bars on epochs and optionally on iterations
-
     def train_step(engine, batch):
 
         x, y = batch[0], batch[1]
@@ -86,12 +77,7 @@ def create_trainer(model, optimizer, criterion, lr_scheduler, train_sampler, con
             y = y.to(device, non_blocking=True)
 
         model.train()
-        # Supervised part
         y_pred = model(x)
-
-        criterion.weights = torch.tensor(
-            [1 - torch.sum(y == x).to(torch.float) / torch.numel(y) for x in [0, 1]], device=device
-        )
 
         loss = criterion(y_pred, y)
 
