@@ -39,7 +39,7 @@ def run(
 
     Args:
         seed (int): random state seed to set. Default, 42.
-        data_path (str): input dataset path. Default, "/tmp/cifar10".
+        data_path (str): input dataset path. Default, "./data".
         subset_train (str): name of training subset. Default, "train".
         subset_val (str): name of validation subset. Default, "val".
         architecture (str): architecture (see https://github.com/qubvel/segmentation_models.pytorch#architectures-).
@@ -50,28 +50,29 @@ def run(
             Default, "imagenet".
         encoder_freeze_at (int or None): defines stages of the encoder which are frozen before the training (e.g. 2
             means all stages including stage 2 and beyond). Default, None.
-        output_path (str): output path. Default, "./data".
-        batch_size (int): total batch size. Default, 8.
+        output_path (str): output path. Default, "./output".
+        batch_size (int): total batch size. Default, 6.
         optimizer (str): optimizer. Default, "Adam".
         weight_decay (float): weight decay. Default, 1e-4.
         num_workers (int): number of workers in the data loader. Default, 12.
         num_iterations (int): number of iterations to train the model. Default, 10000.
-        learning_rate (float): peak of piecewise linear learning rate scheduler. Default, 0.4.
+        learning_rate (float): peak of piecewise linear learning rate scheduler. Default, 0.0001.
         learning_rate_milestone_iterations (iterable of int): numbers of iterations where learning rate is each time
             decreased by a factor gamma. Default, (2000, 8000).
         gamma (float): factor to multiply learning rate with at each milestone. Default, 0.1.
         num_warmup_iterations (int): number of warm-up iterations before learning rate decay. Default, 1000.
         warmup_factor (float): learning rate starts at warmup_factor * learning_rate. Default, 0.001.
-        validate_every (int): run model's validation every ``validate_every`` epochs. Default, 3.
+        validate_every (int): run model's validation every ``validate_every`` epochs. Default, 10.
         checkpoint_every (int): store training checkpoint every ``checkpoint_every`` iterations. Default, 200.
         backend (str, optional): backend to use for distributed configuration. Possible values: None, "nccl", "xla-tpu",
             "gloo" etc. Default, None.
         nproc_per_node (int, optional): optional argument to setup number of processes per node. It is useful,
-            when main python process is spawning training as child processes.
+            when main python process is spawning training as child processes. Default, None.
         resume_from (str, optional): path to checkpoint to use to resume the training from. Default, None.
         log_every_iters (int): argument to log batch loss every ``log_every_iters`` iterations.
-            It can be 0 to disable it. Default, 15.
+            It can be 0 to disable it. Default, 0.
         stop_iteration (int, optional): iteration to stop the training. Can be used to check resume from checkpoint.
+            Default, None.
         with_trains (bool): if True, experiment Trains logger is setup. Default, False.
         active_gpu_ids (tuple of int): ids of GPUs to use. Default, (0,).
         **spawn_kwargs: Other kwargs to spawn run in child processes: master_addr, master_port, node_rank, nnodes
