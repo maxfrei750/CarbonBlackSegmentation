@@ -57,15 +57,19 @@ class Segmenter:
         return model
 
     def segment_image(self, image):
+        prediction = self.get_raw_prediction(image)
+        return prediction.squeeze().cpu().numpy().round().astype(bool)
+
+    def get_raw_prediction(self, image):
         image = self.augmentation_fn(image=image)["image"]
         image = self.preprocessing_fn(image=image)["image"]
 
         image = torch.from_numpy(image).to(self.device).unsqueeze(0)
 
         with torch.no_grad():
-            mask = self.model(image).squeeze().cpu().numpy().round().astype(bool)
+            prediction = self.model(image)
 
-        return mask
+        return prediction
 
 
 if __name__ == "__main__":
