@@ -8,14 +8,9 @@ import torch
 from data import SegmentationDataset
 from deployment import Segmenter
 from ignite.metrics import Accuracy, ConfusionMatrix
+from utils import checkpoint_path_to_config
 from validation import output_transform_accuracy, output_transform_confusion_matrix
 from visualization import get_overlay_image, plot_confusion_matrix
-
-
-def checkpoint_path_to_config(checkpoint_path):
-    keys = ["architecture", "encoder", "encoder_weights"]
-    values = os.path.basename(os.path.dirname(checkpoint_path)).split("_")[0].split("-")
-    return dict(zip(keys, values))
 
 
 def inspect_model(
