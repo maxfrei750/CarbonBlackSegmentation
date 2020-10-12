@@ -74,6 +74,17 @@ class Segmenter:
         image = torch.from_numpy(image).to(self.device).unsqueeze(0)
         return image
 
+    def save_model_as_onnx(self, onnx_file_path=None):
+
+        if onnx_file_path is None:
+            onnx_file_path = os.path.splitext(self.checkpoint_path)[0] + ".onnx"
+
+        dummy_image = np.random.rand(1952, 2240, 3)
+        dummy_input = self._prepare_input_image(dummy_image)
+
+        torch.onnx.export(self.model, dummy_input, onnx_file_path, opset_version=11, verbose=False)
+
+
 if __name__ == "__main__":
     import random
 
