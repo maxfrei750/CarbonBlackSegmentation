@@ -40,14 +40,14 @@ class Segmenter:
 
         self.device = device
 
-        self.model = self.load_model()
+        self.model = self._load_model()
 
         self.preprocessing_fn = get_preprocessing(
             smp.encoders.get_preprocessing_fn(encoder, encoder_weights)
         )
         self.augmentation_fn = get_validation_augmentation()
 
-    def load_model(self):
+    def _load_model(self):
         model = get_model(self.config)
         model.to(self.device)
         checkpoint = torch.load(self.checkpoint_path, map_location=self.device)
@@ -61,16 +61,18 @@ class Segmenter:
         return prediction.squeeze().cpu().numpy().round().astype(bool)
 
     def get_raw_prediction(self, image):
-        image = self.augmentation_fn(image=image)["image"]
-        image = self.preprocessing_fn(image=image)["image"]
-
-        image = torch.from_numpy(image).to(self.device).unsqueeze(0)
+        image = self._prepare_input_image(image)
 
         with torch.no_grad():
             prediction = self.model(image)
 
         return prediction
 
+    def _prepare_input_image(self, image):
+        image = self.augmentation_fn(image=image)["image"]
+        image = self.preprocessing_fn(image=image)["image"]
+        image = torch.from_numpy(image).to(self.device).unsqueeze(0)
+        return image
 
 if __name__ == "__main__":
     import random
