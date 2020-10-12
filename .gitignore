@@ -80,3 +80,4 @@ __pycache__
 /output/
 *.pt
 /data
+*.onnx
