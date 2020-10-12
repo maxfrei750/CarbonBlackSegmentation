@@ -12,8 +12,7 @@ from transforms import get_preprocessing, get_training_augmentation, get_validat
 
 
 class SegmentationDataset(Dataset):
-    """Segmentation Dataset. Read images and masks and apply augmentation and preprocessing transformations.
-    """
+    """Segmentation Dataset. Read images and masks and apply augmentation and preprocessing transformations."""
 
     def __init__(
         self,
@@ -137,7 +136,9 @@ def get_dataloaders(config):
 
 def test():
     import argparse
+
     from PIL import Image
+
     from visualization import get_overlay_image
 
     parser = argparse.ArgumentParser(description="dataset")

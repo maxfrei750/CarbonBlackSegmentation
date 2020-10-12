@@ -25,7 +25,7 @@ def select_active_gpus(gpu_ids):
 
 def download_checkpoint(checkpoint_path):
     """Based on:
-        https://stackoverflow.com/questions/37573483/progress-bar-while-download-file-over-http-with-requests
+    https://stackoverflow.com/questions/37573483/progress-bar-while-download-file-over-http-with-requests
     """
     checkpoint_filename = os.path.basename(checkpoint_path)
 

@@ -4,7 +4,7 @@ import segmentation_models_pytorch as smp
 
 def get_model(config):
     """For a list of possible architectures, encoders and weights, please refer to:
-        https://github.com/qubvel/segmentation_models.pytorch#architectures-
+    https://github.com/qubvel/segmentation_models.pytorch#architectures-
     """
     assert config["architecture"] in smp.__dict__, f"Unknown architecture: {config['architecture']}"
 
