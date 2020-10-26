@@ -10,7 +10,7 @@ from deployment import Segmenter
 
 def demo():
     # Gather paths of images to be segmented.
-    data_dir = os.path.join("data", "val", "input")
+    data_dir = os.path.join("data/")
     image_paths = glob(os.path.join(data_dir, "*.*"))
 
     # When segmenting many images, it may be advisable to use a GPU.
