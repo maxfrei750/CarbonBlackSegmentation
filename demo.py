@@ -10,7 +10,7 @@ def demo():
     device = "cpu"
 
     # Load image.
-    image_path = "test_image.png"
+    image_path = "tests/test_image.png"
     image = Image.open(image_path).convert("RGB")
 
     # Convert image to numpy array.
