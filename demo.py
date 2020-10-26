@@ -1,8 +1,8 @@
 import numpy as np
 from PIL import Image
 
-from deployment import Segmenter
-from visualization import get_overlay_image
+from deployment import Segmenter # used for progress bar in loops
+from visualization import get_overlay_image # used to show results
 
 
 def demo():

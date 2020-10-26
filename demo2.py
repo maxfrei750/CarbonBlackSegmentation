@@ -3,9 +3,9 @@ from glob import glob
 
 import numpy as np
 from PIL import Image
-from tqdm import tqdm
+from tqdm import tqdm # used for progress bar in loops
 
-from deployment import Segmenter
+from deployment import Segmenter # local module for segmentation
 
 
 def demo():
@@ -18,6 +18,8 @@ def demo():
 
     # Perform the segmentation.
     masks = iterate_and_segment_images(image_paths, device)
+    
+    return masks
 
 
 def iterate_and_segment_images(image_paths, device="cpu"):
@@ -41,4 +43,4 @@ def iterate_and_segment_images(image_paths, device="cpu"):
 
 
 if __name__ == "__main__":
-    demo()
+    masks = demo()
