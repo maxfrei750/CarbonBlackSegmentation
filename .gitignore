@@ -76,7 +76,8 @@ __pycache__
 /detection/example/output/
 
 # Custom
-/tests/
 /output/
 *.pt
 /data
+archive/
+result/
