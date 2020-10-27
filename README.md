@@ -10,8 +10,7 @@
 
 # CarbonBlackSegmentation
 
-This repository is a toolbox for the easy training and application of convolutional neural networks for the segmentation 
-of transmission electron microscopy images of carbon black agglomerates.
+This repository is a toolbox for the easy training and application of convolutional neural networks for the segmentation of transmission electron microscopy images of carbon black agglomerates.
 
 The utilized convolutional neural network was inspired by the Panoptic FPN architecture, developed by 
 [Kirillov et al.](https://openaccess.thecvf.com/content_CVPR_2019/papers/Kirillov_Panoptic_Feature_Pyramid_Networks_CVPR_2019_paper.pdf) 
@@ -26,7 +25,26 @@ realized with [PyTorch](https://pytorch.org/).
    * [Setup](#setup)
    * [Getting started](#getting-started)
 
-## Example Detection 
+## Example 
+
+Demos demonstrating the use of this codebase are provided in the demos folder of this repository. Classifying a set of images generally makes use of *wrapper* functions, which take a single or set of image paths and output a series of binary masks identifying agglomerates in the image. For example, 
+
+```python
+import os
+from wrapper import single_image # segmenter for single image
+
+# Specify image path.
+image_path = os.path.join("test_images", "201805A_A6_004.png")
+
+# Classify the default image
+print("Classifying image...")
+mask = single_image(image_path)
+print("Complete.")
+```
+
+will read in a single test image, 201805A_A6_004.png, and output a mask, identifying pixels that are part of the agglomerates as `1` and pixels that are part of the background as `0`. 
+
+Several example classifications are shown below.
 <img src="assets/example_detection.jpg" alt="Example Detection"/> 
 
 ## Citation
