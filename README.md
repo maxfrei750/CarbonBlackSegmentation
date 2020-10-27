@@ -72,7 +72,7 @@ If you use this repository for a publication, then please cite it using the foll
 
 ## Getting started
 ### Application
-If you just want to segment images, then please refer to `demo.py`.
+If you just want to segment images, then please refer to the scripts in the demo folder.
 ### Training
 If you want to improve your segmentation results by training a model on your own data, 
 then please refer to `train_model.py`.
