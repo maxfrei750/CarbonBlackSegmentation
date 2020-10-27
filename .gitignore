@@ -82,4 +82,3 @@ __pycache__
 archive/
 results/
 *.onnx
-/dev

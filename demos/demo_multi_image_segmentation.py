@@ -18,6 +18,8 @@ def demo():
 
     # Perform the segmentation.
     masks = iterate_and_segment_images(image_paths, device)
+    
+    return masks
 
     return masks
 
