@@ -21,8 +21,6 @@ def demo():
     
     return masks
 
-    return masks
-
 
 def iterate_and_segment_images(image_paths, device="cpu"):
 
