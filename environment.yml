@@ -16,6 +16,7 @@ dependencies:
 - albumentations
 - fire
 - future
+- tensorboard
 - tensorboardx
 - protobuf
 - pip

@@ -40,14 +40,14 @@ class Segmenter:
 
         self.device = device
 
-        self.model = self.load_model()
+        self.model = self._load_model()
 
         self.preprocessing_fn = get_preprocessing(
             smp.encoders.get_preprocessing_fn(encoder, encoder_weights)
         )
         self.augmentation_fn = get_validation_augmentation()
 
-    def load_model(self):
+    def _load_model(self):
         model = get_model(self.config)
         model.to(self.device)
         checkpoint = torch.load(self.checkpoint_path, map_location=self.device)
@@ -57,15 +57,32 @@ class Segmenter:
         return model
 
     def segment_image(self, image):
-        image = self.augmentation_fn(image=image)["image"]
-        image = self.preprocessing_fn(image=image)["image"]
+        prediction = self.get_raw_prediction(image)
+        return prediction.squeeze().cpu().numpy().round().astype(bool)
 
-        image = torch.from_numpy(image).to(self.device).unsqueeze(0)
+    def get_raw_prediction(self, image):
+        image = self._prepare_input_image(image)
 
         with torch.no_grad():
-            mask = self.model(image).squeeze().cpu().numpy().round().astype(bool)
+            prediction = self.model(image)
 
-        return mask
+        return prediction
+
+    def _prepare_input_image(self, image):
+        image = self.augmentation_fn(image=image)["image"]
+        image = self.preprocessing_fn(image=image)["image"]
+        image = torch.from_numpy(image).to(self.device).unsqueeze(0)
+        return image
+
+    def save_model_as_onnx(self, onnx_file_path=None):
+
+        if onnx_file_path is None:
+            onnx_file_path = os.path.splitext(self.checkpoint_path)[0] + ".onnx"
+
+        dummy_image = np.random.rand(1952, 2240, 3)
+        dummy_input = self._prepare_input_image(dummy_image)
+
+        torch.onnx.export(self.model, dummy_input, onnx_file_path, opset_version=11, verbose=False)
 
 
 if __name__ == "__main__":

@@ -1,4 +1,3 @@
-import logging
 import os
 from datetime import datetime
 
@@ -25,7 +24,7 @@ def select_active_gpus(gpu_ids):
 
 def download_checkpoint(checkpoint_path):
     """Based on:
-        https://stackoverflow.com/questions/37573483/progress-bar-while-download-file-over-http-with-requests
+    https://stackoverflow.com/questions/37573483/progress-bar-while-download-file-over-http-with-requests
     """
     checkpoint_filename = os.path.basename(checkpoint_path)
 
@@ -56,3 +55,9 @@ def download_checkpoint(checkpoint_path):
     progress_bar.close()
     if total_size != 0 and progress_bar.n != total_size:
         raise RuntimeError("Error while downloading checkpoint file.")
+
+
+def checkpoint_path_to_config(checkpoint_path):
+    keys = ["architecture", "encoder", "encoder_weights"]
+    values = os.path.basename(os.path.dirname(checkpoint_path)).split("_")[0].split("-")
+    return dict(zip(keys, values))
