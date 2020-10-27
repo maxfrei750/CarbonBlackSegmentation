@@ -19,6 +19,7 @@ dependencies:
 - tensorboard
 - tensorboardx
 - protobuf
+- jupyter
 - pip
 - pip:
     - segmentation-models-pytorch
