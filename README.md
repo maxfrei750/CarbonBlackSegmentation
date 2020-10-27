@@ -45,6 +45,7 @@ print("Complete.")
 will read in a single test image, 201805A_A6_004.png, and output a mask, identifying pixels that are part of the agglomerates as `1` and pixels that are part of the background as `0`. 
 
 Several example classifications are shown below.
+
 <img src="assets/example_detection.jpg" alt="Example Detection"/> 
 
 ## Citation
