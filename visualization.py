@@ -71,30 +71,41 @@ def plot_binary_grid(masks, image_paths=""):
     plt.gray()  # apply grayscale colormap
 
     num_masks = len(masks)  # number of images/masks
-    num_columns = np.minimum(num_masks, 5)  # max. no. of columns is 5
-    num_rows = int(np.ceil(num_masks / num_columns))  # split up over rows
-    fig, axs = plt.subplots(num_rows, num_columns, figsize=(20, 3.5 * num_rows))
-
-    ii = 0  # column
-    jj = 0  # row
-    kk = 0  # global
+    num_cols = 5  # max. no. of columns is 5
+    num_rows = int(np.ceil(num_masks / num_cols))  # split up over rows
+    fig, axs = plt.subplots(num_rows, num_cols, figsize=(20, 3.5 * num_rows))
+    
+    ii = 0 # column
+    jj = 0 # row
+    kk = 0 # global
     for mask in masks:
-        axs[jj, ii].set_xticks([])
-        axs[jj, ii].set_yticks([])
+        if num_rows == 1: # is a single row
+            ax = axs[kk]
+        else: # if multiple rows
+            ax = axs[jj][ii]
+            
+        ax.set_xticks([])
+        ax.set_yticks([])
 
         if image_paths == "":
-            axs[jj, ii].imshow(mask)
+            ax.imshow(mask)
         else:
             image = np.asarray(Image.open(image_paths[kk]).convert("RGB"))
-            axs[jj, ii].imshow(get_overlay_image(image, prediction=mask))
-
-        ii = ii + 1
-        kk = kk + 1
-        if ii == num_columns:
-            ii = 0
-            jj = jj + 1
+            ax.imshow(get_overlay_image(image, prediction=mask))
+        
+        ii = ii + 1 # increment column
+        kk = kk + 1 # increment global
+        if ii == num_cols:
+            ii = 0 # reset column
+            jj = jj + 1 # increment row
 
     # for remaining panels, remove axes
-    while (ii * jj) <= ((num_columns - 1) * (num_rows - 1)):
-        axs[jj, ii].axis("off")
-        ii = ii + 1
+    while ii < num_cols:
+        if num_rows == 1: # is a single row
+            ax = axs[kk]
+        else: # if multiple rows
+            ax = axs[jj][ii]
+        
+        ax.axis("off")
+        ii = ii + 1 # increment column
+        kk = kk + 1 # increment global
