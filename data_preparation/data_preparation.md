@@ -5,7 +5,7 @@
     ```
 2. Converted from tif to png: 
     ```
-    mogrify -format png *.*`
+    mogrify -format png *.*
     rm *.TIF
     ```
 3. Removed outliers:

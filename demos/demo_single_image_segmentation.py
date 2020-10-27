@@ -1,8 +1,10 @@
+import os
+
 import numpy as np
 from PIL import Image
 
-from deployment import Segmenter
-from visualization import get_overlay_image
+from deployment import Segmenter  # used for progress bar in loops
+from visualization import get_overlay_image  # used to show results
 
 
 def demo():
@@ -10,7 +12,7 @@ def demo():
     device = "cpu"
 
     # Load image.
-    image_path = "test_image.png"
+    image_path = os.path.join("..", "test_images", "201805A_A6_004.png")
     image = Image.open(image_path).convert("RGB")
 
     # Convert image to numpy array.
