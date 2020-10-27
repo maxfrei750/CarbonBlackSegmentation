@@ -63,7 +63,7 @@ def plot_binary_grid(masks, image_paths=""):
         Only masks, plots B&W binaries.
         Both masks and image_paths, uses get_overlay_image.
 
-    Author: Timothy Sipkens, Oct/2020
+    Contributor: @tsipkens, Oct/2020
 
     :param masks: list of binary masks
     :param image_paths: list of image paths
