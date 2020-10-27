@@ -57,13 +57,13 @@ def plot_confusion_matrix(confusion_matrix_data):
     return plt.gcf()
 
 
-def visualize_binaries(masks, image_paths=""):
+def plot_binary_grid(masks, image_paths=""):
     """Plots a grid of results.
     Takes masks and option image_paths argument. If:
         Only masks, plots B&W binaries.
         Both masks and image_paths, uses get_overlay_image.
 
-    Author: Timothy Sipkens
+    Author: Timothy Sipkens, Oct/2020
 
     :param masks: list of binary masks
     :param image_paths: list of image paths
