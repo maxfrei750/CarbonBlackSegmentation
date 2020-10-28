@@ -74,16 +74,16 @@ def plot_binary_grid(masks, image_paths=""):
     num_cols = 5  # max. no. of columns is 5
     num_rows = int(np.ceil(num_masks / num_cols))  # split up over rows
     fig, axs = plt.subplots(num_rows, num_cols, figsize=(20, 3.5 * num_rows))
-    
-    ii = 0 # column
-    jj = 0 # row
-    kk = 0 # global
+
+    ii = 0  # column
+    jj = 0  # row
+    kk = 0  # global
     for mask in masks:
-        if num_rows == 1: # is a single row
+        if num_rows == 1:  # is a single row
             ax = axs[kk]
-        else: # if multiple rows
+        else:  # if multiple rows
             ax = axs[jj][ii]
-            
+
         ax.set_xticks([])
         ax.set_yticks([])
 
@@ -92,20 +92,20 @@ def plot_binary_grid(masks, image_paths=""):
         else:
             image = np.asarray(Image.open(image_paths[kk]).convert("RGB"))
             ax.imshow(get_overlay_image(image, prediction=mask))
-        
-        ii = ii + 1 # increment column
-        kk = kk + 1 # increment global
+
+        ii = ii + 1  # increment column
+        kk = kk + 1  # increment global
         if ii == num_cols:
-            ii = 0 # reset column
-            jj = jj + 1 # increment row
+            ii = 0  # reset column
+            jj = jj + 1  # increment row
 
     # for remaining panels, remove axes
     while ii < num_cols:
-        if num_rows == 1: # is a single row
+        if num_rows == 1:  # is a single row
             ax = axs[kk]
-        else: # if multiple rows
+        else:  # if multiple rows
             ax = axs[jj][ii]
-        
+
         ax.axis("off")
-        ii = ii + 1 # increment column
-        kk = kk + 1 # increment global
+        ii = ii + 1  # increment column
+        kk = kk + 1  # increment global
