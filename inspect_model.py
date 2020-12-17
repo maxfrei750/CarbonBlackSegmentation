@@ -1,6 +1,6 @@
 import os
+import random
 
-import numpy as np
 from PIL import Image
 
 import fire
@@ -63,8 +63,11 @@ def save_example_predictions(
     dataset = SegmentationDataset(data_root, data_subset)
     dataset_vis = SegmentationDataset(data_root, data_subset)
 
-    for i in range(num_predictions):
-        image_id = np.random.choice(len(dataset))
+    num_samples_in_dataset = len(dataset)
+
+    random_image_ids = random.sample(range(num_samples_in_dataset), num_predictions)
+
+    for image_id in random_image_ids:
 
         image_vis = dataset_vis[image_id][0].astype("uint8")
         image, mask_gt = dataset[image_id]
