@@ -4,7 +4,7 @@ from wrapper import multi_image  # import segmenter for multiple images
 if __name__ == "__main__":
     # Apply segmenter to default test images.
     print("Classifying images...")
-    masks = multi_image()  # uses default test image
+    masks = multi_image()  # uses default test images
     print("Complete.")
 
     # Show results.

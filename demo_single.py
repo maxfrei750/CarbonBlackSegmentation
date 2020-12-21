@@ -8,7 +8,7 @@ from wrapper import single_image  # segmenter for single image
 
 if __name__ == "__main__":
     # Define the path to the image.
-    image_path = os.path.join("..", "test_images", "201805A_A6_004.png")
+    image_path = os.path.join("test_images", "201805A_A6_004.png")
     image = Image.open(image_path).convert("RGB")  # open image
     image = np.asarray(image)  # convert image to numpy array
 
