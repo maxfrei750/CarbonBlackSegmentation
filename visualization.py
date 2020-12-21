@@ -71,6 +71,11 @@ def plot_binary_grid(masks, image_paths=""):
     plt.gray()  # apply grayscale colormap
 
     num_masks = len(masks)  # number of images/masks
+
+    # If number of masks is zero, exit without plotting.
+    if num_masks == 0:
+        return
+
     num_cols = 5  # max. no. of columns is 5
     num_rows = int(np.ceil(num_masks / num_cols))  # split up over rows
     fig, axs = plt.subplots(num_rows, num_cols, figsize=(20, 3.5 * num_rows))
@@ -100,12 +105,13 @@ def plot_binary_grid(masks, image_paths=""):
             jj = jj + 1  # increment row
 
     # for remaining panels, remove axes
-    while ii < num_cols:
-        if num_rows == 1:  # is a single row
-            ax = axs[kk]
-        else:  # if multiple rows
-            ax = axs[jj][ii]
+    if not ii == 0:
+        while ii < num_cols:
+            if num_rows == 1:  # is a single row
+                ax = axs[kk]
+            else:  # if multiple rows
+                ax = axs[jj][ii]
 
-        ax.axis("off")
-        ii = ii + 1  # increment column
-        kk = kk + 1  # increment global
+            ax.axis("off")
+            ii = ii + 1  # increment column
+            kk = kk + 1  # increment global

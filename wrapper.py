@@ -50,8 +50,9 @@ def multi_image(image_paths="", device="cuda"):
     """
 
     # Gather paths of images to be segmented.
-    # By default, if image_paths="", use images in test_images folder.
-    if image_paths == "":
+    # By default, if image_paths="" or image_paths=[],
+    # use images in test_images folder.
+    if (image_paths == "") or (image_paths == []):
         data_dir = os.path.join("test_images")
         image_paths = glob(os.path.join(data_dir, "*.*"))
 
