@@ -2,11 +2,10 @@ import os
 import warnings
 from glob import glob
 
+import fire
 import numpy as np
 from PIL import Image, ImageFilter
 from tqdm import tqdm
-
-import fire
 
 
 def inspect_data(

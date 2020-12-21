@@ -2,9 +2,8 @@ import os
 from datetime import datetime
 
 import requests
-from tqdm import tqdm
-
 from ignite.utils import setup_logger
+from tqdm import tqdm
 
 # CHECKPOINT_URL_BASE = (
 #     "https://github.com/maxfrei750/CarbonBlackSegmentation/releases/download/v0.1-alpha/"

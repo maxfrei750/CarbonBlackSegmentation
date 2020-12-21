@@ -2,12 +2,12 @@ import os
 import random
 from glob import glob
 
-import numpy as np
-from PIL import Image
-
 import ignite.distributed as idist
+import numpy as np
 import segmentation_models_pytorch as smp
+from PIL import Image
 from torch.utils.data import Dataset
+
 from transforms import get_preprocessing, get_training_augmentation, get_validation_augmentation
 
 

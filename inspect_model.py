@@ -1,13 +1,13 @@
 import os
 import random
 
-from PIL import Image
-
 import fire
 import torch
+from ignite.metrics import Accuracy, ConfusionMatrix
+from PIL import Image
+
 from data import SegmentationDataset
 from deployment import Segmenter
-from ignite.metrics import Accuracy, ConfusionMatrix
 from utils import checkpoint_path_to_config
 from validation import output_transform_accuracy, output_transform_confusion_matrix
 from visualization import get_overlay_image, plot_confusion_matrix

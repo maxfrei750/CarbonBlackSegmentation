@@ -1,6 +1,5 @@
-import numpy as np
-
 import albumentations as albu
+import numpy as np
 
 
 def get_training_augmentation():
@@ -63,6 +62,7 @@ def get_preprocessing(preprocessing_fn):
 
 def test(data_root):
     from PIL import Image
+
     from data import SegmentationDataset
     from visualization import get_overlay_image
 

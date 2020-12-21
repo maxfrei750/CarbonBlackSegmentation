@@ -1,16 +1,19 @@
 from pathlib import Path
 
-import modeling
 import segmentation_models_pytorch as smp
 import torch
-import utils
-from data import get_dataloaders
 from ignite import distributed as idist
 from ignite.contrib.engines import common
 from ignite.contrib.handlers import create_lr_scheduler_with_warmup
 from ignite.engine import Engine, Events, create_supervised_evaluator
 from ignite.handlers import Checkpoint
 from ignite.utils import manual_seed, setup_logger
+from torch import optim
+from torch.optim.lr_scheduler import MultiStepLR
+
+import modeling
+import utils
+from data import get_dataloaders
 from log import (
     ExamplePredictionLogger,
     get_save_handler,
@@ -19,8 +22,6 @@ from log import (
     log_metrics,
     setup_trains_logging,
 )
-from torch import optim
-from torch.optim.lr_scheduler import MultiStepLR
 from validation import get_metrics
 
 

@@ -2,11 +2,11 @@ import os
 from glob import glob
 
 import numpy as np
-from PIL import Image
-
 import segmentation_models_pytorch as smp
 import torch
 from ignite.handlers import Checkpoint
+from PIL import Image
+
 from modeling import get_model
 from transforms import get_preprocessing, get_validation_augmentation
 from utils import download_checkpoint
