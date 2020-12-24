@@ -68,7 +68,6 @@ def plot_binary_grid(masks, image_paths=""):
     :param masks: list of binary masks
     :param image_paths: list of image paths
     """
-    plt.gray()  # apply grayscale colormap
 
     num_masks = len(masks)  # number of images/masks
 
