@@ -95,8 +95,6 @@ class Segmenter:
 
         inputs = torch.ones(*input_shape)
 
-        # self.model(inputs)
-
         torch.onnx.export(
             self.model,
             inputs,
