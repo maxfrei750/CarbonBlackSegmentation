@@ -79,10 +79,34 @@ class Segmenter:
         if onnx_file_path is None:
             onnx_file_path = os.path.splitext(self.checkpoint_path)[0] + ".onnx"
 
-        dummy_image = np.random.rand(1952, 2240, 3)
-        dummy_input = self._prepare_input_image(dummy_image)
+        batch_size = 1
+        width = 2240
+        height = 1952
 
-        torch.onnx.export(self.model, dummy_input, onnx_file_path, opset_version=11, verbose=False)
+        input_shape = (batch_size, 3, height, width)
+
+        dynamic_axes = {
+            "input": {0: "batch_size", 2: "height", 3: "width"},
+            "output": {0: "batch_size", 2: "height", 3: "width"},
+        }
+
+        input_names = ["input"]
+        output_names = ["output"]
+
+        inputs = torch.ones(*input_shape)
+
+        # self.model(inputs)
+
+        torch.onnx.export(
+            self.model,
+            inputs,
+            onnx_file_path,
+            input_names=input_names,
+            output_names=output_names,
+            dynamic_axes=dynamic_axes,
+            opset_version=11,
+            verbose=False,
+        )
 
 
 if __name__ == "__main__":
