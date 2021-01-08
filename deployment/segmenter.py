@@ -61,12 +61,31 @@ class Segmenter:
         return prediction.squeeze().cpu().numpy().round().astype(bool)
 
     def get_raw_prediction(self, image):
+        original_shape = image.shape[:2]
         image = self._prepare_input_image(image)
 
         with torch.no_grad():
             prediction = self.model(image)
 
+        prediction = Segmenter._postprocess_output(prediction, original_shape)
+
         return prediction
+
+    @staticmethod
+    def _postprocess_output(prediction, original_shape):
+        # Crop padding that may have been added during the preprocessing.
+        original_height, original_width = original_shape
+        height, width = prediction.shape[2:]
+
+        padding_top = int((height - original_height) / 2.0)
+        padding_bottom = height - original_height - padding_top
+
+        padding_left = int((width - original_width) / 2.0)
+        padding_right = width - original_width - padding_left
+
+        return prediction[
+            :, :, padding_top : height - padding_bottom, padding_left : width - padding_right
+        ]
 
     def _prepare_input_image(self, image):
         image = self.augmentation_fn(image=image)["image"]
