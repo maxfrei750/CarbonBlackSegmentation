@@ -88,6 +88,7 @@ def get_segmenter(checkpoint_path, device):
         architecture=config["architecture"],
         encoder=config["encoder"],
         encoder_weights=config["encoder_weights"],
+        checkpoint_path=checkpoint_path,
         device=device,
     )
     return segmenter
