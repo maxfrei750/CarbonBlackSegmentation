@@ -1,10 +1,6 @@
 [![Paper (Powder Technology)](https://img.shields.io/badge/DOI-10.1016/j.powtec.2021.04.026-blue.svg)](https://doi.org/10.1016/j.powtec.2021.04.026)
 [![Paper (arXiv)](https://img.shields.io/badge/arXiv-2103.09272-b31b1b.svg)](https://arxiv.org/abs/2103.09272)
-[![License](https://img.shields.io/github/license/maxfrei750/CarbonBlackSegmentation.svg)](https://github.com/maxfrei750/CarbonBlackSegmentation/blob/master/LICENSE) 
-
-- [ ] Create 1.0 release
-- [ ] Replace temporary checkpoint url
-- [ ] Tidy up repository
+[![License](https://img.shields.io/github/license/maxfrei750/CarbonBlackSegmentation.svg)](https://github.com/maxfrei750/CarbonBlackSegmentation/blob/master/LICENSE)
 
 # CarbonBlackSegmentation
 

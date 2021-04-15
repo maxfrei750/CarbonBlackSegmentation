@@ -5,9 +5,9 @@ import requests
 from ignite.utils import setup_logger
 from tqdm import tqdm
 
-# CHECKPOINT_URL_BASE = (
-#     "https://github.com/maxfrei750/CarbonBlackSegmentation/releases/download/v0.1-alpha/"
-# )
+CHECKPOINT_URL_BASE = (
+    "https://github.com/maxfrei750/CarbonBlackSegmentation/releases/download/v1.0/"
+)
 
 
 def get_time_stamp():
@@ -33,9 +33,7 @@ def download_checkpoint(checkpoint_path):
         checkpoint_filename in expected_checkpoint_filenames
     ), f"Expected checkpoint file name to be in {checkpoint_filename}."
 
-    # url = os.path.join(CHECKPOINT_URL_BASE, checkpoint_filename)
-    # TODO: Replace temporary checkpoint url.
-    url = "https://uni-duisburg-essen.sciebo.de/s/61Wk4usb991ffyr/download"
+    url = os.path.join(CHECKPOINT_URL_BASE, checkpoint_filename)
     request_stream = requests.get(url, stream=True)
 
     # Total size in bytes.
