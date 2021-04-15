@@ -1,17 +1,17 @@
 name: CarbonBlackSegmentation
 channels:
-- conda-forge
 - pytorch
 - defaults
+- conda-forge
 dependencies:
-- python
+- python>=3.8
 - opencv
 - pillow
 - matplotlib
 - tqdm
 - scikit-learn
 - pytorch
-- cudatoolkit=10.2
+- cudatoolkit=11.0
 - ignite
 - albumentations
 - fire
@@ -24,3 +24,4 @@ dependencies:
 - pip:
     - segmentation-models-pytorch
     - trains
+    - opencv-python
